@@ -7,6 +7,7 @@
 [ext_resource type="Script" uid="uid://b24bstassw26s" path="res://scripts/view.gd" id="5_0lrhn"]
 [ext_resource type="AudioStream" uid="uid://2in1jtv5bh0y" path="res://audio/skid.ogg" id="5_choun"]
 [ext_resource type="AudioStream" uid="uid://j6x2is8pyt8y" path="res://audio/engine.ogg" id="6_choun"]
+[ext_resource type="AudioStream" uid="uid://io4pmr3lo1dy" path="res://audio/impact.ogg" id="7_eb6dy"]
 [ext_resource type="MeshLibrary" uid="uid://b6myd2b7l2o2j" path="res://models/Library/mesh-library.tres" id="8_eg7gk"]
 [ext_resource type="PackedScene" uid="uid://c44tfiddyjjm1" path="res://models/vehicle-truck-green.glb" id="9_cmq2j"]
 [ext_resource type="PackedScene" uid="uid://c5e64mpylh1ge" path="res://models/vehicle-truck-purple.glb" id="10_p3c1o"]
@@ -113,6 +114,9 @@ autoplay = true
 stream = ExtResource("6_choun")
 autoplay = true
 
+[node name="ImpactSound" type="AudioStreamPlayer3D" parent="Vehicle/Container"]
+stream = ExtResource("7_eb6dy")
+
 [node name="Sphere" type="RigidBody3D" parent="Vehicle"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
 collision_layer = 8
@@ -121,7 +125,7 @@ physics_material_override = SubResource("PhysicsMaterial_eyo0u")
 gravity_scale = 1.5
 continuous_cd = true
 contact_monitor = true
-max_contacts_reported = 1
+max_contacts_reported = 2
 linear_damp = 0.1
 angular_damp_mode = 1
 angular_damp = 4.0
@@ -175,3 +179,5 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -23.7772, -0.143123, -13.5596
 
 [node name="vehicle-truck-red" parent="." instance=ExtResource("11_wocnk")]
 transform = Transform3D(-0.913034, 0, 0.407884, 0, 1, 0, -0.407884, 0, -0.913034, -1.36138, -0.148564, -23.8)
+
+[connection signal="body_entered" from="Vehicle/Sphere" to="Vehicle" method="_on_sphere_body_entered"]
