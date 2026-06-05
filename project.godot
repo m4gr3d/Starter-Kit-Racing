@@ -72,6 +72,10 @@ bounce={
 ]
 }
 
+[input_devices]
+
+pointing/enable_virtual_controller=true
+
 [physics]
 
 3d/physics_engine="Jolt Physics"
