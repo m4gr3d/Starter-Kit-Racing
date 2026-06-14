@@ -1,0 +1,42 @@
+[gd_scene format=3 uid="uid://d0j1llb4yr2rk"]
+
+[ext_resource type="PackedScene" uid="uid://clq7nox1juh3a" path="res://scenes/main.tscn" id="1_3carf"]
+[ext_resource type="Script" uid="uid://dyx8xwktmkav6" path="res://scripts/xr_main.gd" id="1_qwytd"]
+[ext_resource type="PackedScene" uid="uid://df502krdp6gav" path="res://addons/spatialize/input/controller_input.tscn" id="2_qwytd"]
+[ext_resource type="PackedScene" uid="uid://clc5dre31iskm" path="res://addons/godot-xr-tools/xr/start_xr.tscn" id="4_bfvqv"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_swsrw"]
+size = Vector3(46.80432, 7.490795, 58.596916)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_mfdrb"]
+transparency = 1
+albedo_color = Color(1, 1, 1, 0.5568628)
+
+[node name="XrMain" type="Node3D" unique_id=871671231]
+script = ExtResource("1_qwytd")
+
+[node name="XROrigin3D" type="XROrigin3D" parent="." unique_id=33482920]
+world_scale = 20.0
+
+[node name="XRCamera3D" type="XRCamera3D" parent="XROrigin3D" unique_id=656859302]
+
+[node name="LeftXRController3D" type="XRController3D" parent="XROrigin3D" unique_id=314327334]
+tracker = &"left_hand"
+
+[node name="RightXRController3D" type="XRController3D" parent="XROrigin3D" unique_id=119286566]
+tracker = &"right_hand"
+
+[node name="GameWorld" type="Marker3D" parent="." unique_id=1630931796]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.919, -27.123123, 3.54)
+
+[node name="Main" parent="GameWorld" unique_id=1145999287 instance=ExtResource("1_3carf")]
+
+[node name="ControllerInput" parent="." unique_id=100622756 instance=ExtResource("2_qwytd")]
+
+[node name="VolumePortal" type="MeshInstance3D" parent="." unique_id=1426453510]
+visible = false
+mesh = SubResource("BoxMesh_swsrw")
+surface_material_override/0 = SubResource("StandardMaterial3D_mfdrb")
+
+[node name="StartXR" parent="." unique_id=1361405791 instance=ExtResource("4_bfvqv")]
+enable_passthrough = true
