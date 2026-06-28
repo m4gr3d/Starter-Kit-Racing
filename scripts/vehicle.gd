@@ -42,7 +42,29 @@ var prev_position: Vector3
 
 var calculated_lean: float
 
+const TRACKPAD_DEADZONE = 0.1
+var xr_trackpad: XRController3D = null
+var xr_trackpad_touched := false
+var xr_trackpad_origin := Vector2(0, 0)
+
 # Public Functions
+func _ready() -> void:
+	xr_trackpad =  get_node_or_null("/root/XrMain/XROrigin3D/SpatialTrackpad")
+	if not xr_trackpad:
+		printerr("FHK - Unable to retrieve xr trackpad")
+	else:
+		print("FHK - Connecting to xr trackpad...")
+		xr_trackpad.button_pressed.connect(_on_spatial_trackpad_button_pressed)
+		xr_trackpad.button_released.connect(_on_spatial_trackpad_button_released)
+
+func _on_spatial_trackpad_button_pressed(action_name: String) -> void:
+	if action_name == "primary_touch":
+		xr_trackpad_touched = true
+		xr_trackpad_origin = xr_trackpad.get_vector2("primary")
+
+func _on_spatial_trackpad_button_released(action_name: String) -> void:
+	if action_name == "primary_touch":
+		xr_trackpad_touched = false
 
 func get_vehicle_position() -> Vector3: return vehicle_model.global_position
 
@@ -113,8 +135,20 @@ func _physics_process(delta):
 func handle_input(delta):
 
 	if raycast.is_colliding():
-		input.x = Input.get_axis("left", "right")
-		input.z = Input.get_axis("back", "forward")
+		var x_value = Input.get_axis("left", "right")
+		var z_value = Input.get_axis("back", "forward")
+		
+		if xr_trackpad and xr_trackpad_touched:
+			var current_pos = xr_trackpad.get_vector2("primary")
+			var delta_pos = current_pos - xr_trackpad_origin
+			print("FHK - Delta pos: " + str(delta_pos))
+			if abs(delta_pos.x) >= TRACKPAD_DEADZONE:
+				x_value += 2 * delta_pos.x
+			if abs(delta_pos.y) >= TRACKPAD_DEADZONE:
+				z_value += -3 * delta_pos.y
+		
+		input.x = x_value
+		input.z = z_value
 
 	sphere.angular_velocity += vehicle_model.get_global_transform().basis.x * (linear_speed * 100) * delta
 

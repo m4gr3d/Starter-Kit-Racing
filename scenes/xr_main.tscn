@@ -16,7 +16,6 @@ albedo_color = Color(1, 1, 1, 0.5568628)
 script = ExtResource("1_qwytd")
 
 [node name="XROrigin3D" type="XROrigin3D" parent="." unique_id=33482920]
-world_scale = 20.0
 
 [node name="XRCamera3D" type="XRCamera3D" parent="XROrigin3D" unique_id=656859302]
 
@@ -26,8 +25,12 @@ tracker = &"left_hand"
 [node name="RightXRController3D" type="XRController3D" parent="XROrigin3D" unique_id=119286566]
 tracker = &"right_hand"
 
+[node name="SpatialTrackpad" type="XRController3D" parent="XROrigin3D" unique_id=151305519]
+tracker = &"/user/spatial_trackpad"
+show_when_tracked = true
+
 [node name="GameWorld" type="Marker3D" parent="." unique_id=1630931796]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.919, -27.123123, 3.54)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.623103, -24.3364, 3.54)
 
 [node name="Main" parent="GameWorld" unique_id=1145999287 instance=ExtResource("1_3carf")]
 
