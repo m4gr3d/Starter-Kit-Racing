@@ -6,7 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://clc5dre31iskm" path="res://addons/godot-xr-tools/xr/start_xr.tscn" id="4_bfvqv"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_swsrw"]
-size = Vector3(46.80432, 7.490795, 58.596916)
+size = Vector3(45, 7, 45)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_mfdrb"]
 transparency = 1
@@ -30,7 +30,7 @@ tracker = &"/user/spatial_trackpad"
 show_when_tracked = true
 
 [node name="GameWorld" type="Marker3D" parent="." unique_id=1630931796]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.623103, -24.3364, 3.54)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.547268, 0, 0)
 
 [node name="Main" parent="GameWorld" unique_id=1145999287 instance=ExtResource("1_3carf")]
 
