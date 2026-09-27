@@ -2,22 +2,24 @@
 
 [ext_resource type="PackedScene" uid="uid://clq7nox1juh3a" path="res://scenes/main.tscn" id="1_3carf"]
 [ext_resource type="Script" uid="uid://dyx8xwktmkav6" path="res://scripts/xr_main.gd" id="1_qwytd"]
+[ext_resource type="PackedScene" uid="uid://801oo4p7devm" path="res://addons/spatialize/cube_depth.tscn" id="2_m238l"]
 [ext_resource type="PackedScene" uid="uid://df502krdp6gav" path="res://addons/spatialize/input/controller_input.tscn" id="2_qwytd"]
 [ext_resource type="PackedScene" uid="uid://clc5dre31iskm" path="res://addons/godot-xr-tools/xr/start_xr.tscn" id="4_bfvqv"]
 
-[sub_resource type="BoxMesh" id="BoxMesh_swsrw"]
-size = Vector3(45, 7, 45)
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_mfdrb"]
-transparency = 1
-albedo_color = Color(1, 1, 1, 0.5568628)
+[sub_resource type="BoxMesh" id="BoxMesh_m238l"]
+resource_local_to_scene = true
+size = Vector3(18, 6, 18)
 
 [node name="XrMain" type="Node3D" unique_id=871671231]
 script = ExtResource("1_qwytd")
 
 [node name="XROrigin3D" type="XROrigin3D" parent="." unique_id=33482920]
 
+[node name="VolumePortal" parent="XROrigin3D" unique_id=1421330224 instance=ExtResource("2_m238l")]
+mesh = SubResource("BoxMesh_m238l")
+
 [node name="XRCamera3D" type="XRCamera3D" parent="XROrigin3D" unique_id=656859302]
+current = true
 
 [node name="LeftXRController3D" type="XRController3D" parent="XROrigin3D" unique_id=314327334]
 tracker = &"left_hand"
@@ -30,16 +32,11 @@ tracker = &"/user/spatial_trackpad"
 show_when_tracked = true
 
 [node name="GameWorld" type="Marker3D" parent="." unique_id=1630931796]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.547268, 0, 0)
 
 [node name="Main" parent="GameWorld" unique_id=1145999287 instance=ExtResource("1_3carf")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2.5, 0)
 
 [node name="ControllerInput" parent="." unique_id=100622756 instance=ExtResource("2_qwytd")]
-
-[node name="VolumePortal" type="MeshInstance3D" parent="." unique_id=1426453510]
-visible = false
-mesh = SubResource("BoxMesh_swsrw")
-surface_material_override/0 = SubResource("StandardMaterial3D_mfdrb")
 
 [node name="StartXR" parent="." unique_id=1361405791 instance=ExtResource("4_bfvqv")]
 enable_passthrough = true

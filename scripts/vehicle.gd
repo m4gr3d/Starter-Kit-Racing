@@ -49,13 +49,14 @@ var xr_trackpad_origin := Vector2(0, 0)
 
 # Public Functions
 func _ready() -> void:
-	xr_trackpad =  get_node_or_null("/root/XrMain/XROrigin3D/SpatialTrackpad")
-	if not xr_trackpad:
-		printerr("FHK - Unable to retrieve xr trackpad")
-	else:
-		print("FHK - Connecting to xr trackpad...")
-		xr_trackpad.button_pressed.connect(_on_spatial_trackpad_button_pressed)
-		xr_trackpad.button_released.connect(_on_spatial_trackpad_button_released)
+	if OS.has_feature("xr"):
+		xr_trackpad =  get_node_or_null("/root/XrMain/XROrigin3D/SpatialTrackpad")
+		if not xr_trackpad:
+			printerr("Unable to retrieve xr trackpad")
+		else:
+			print("Connecting to xr trackpad...")
+			xr_trackpad.button_pressed.connect(_on_spatial_trackpad_button_pressed)
+			xr_trackpad.button_released.connect(_on_spatial_trackpad_button_released)
 
 func _on_spatial_trackpad_button_pressed(action_name: String) -> void:
 	if action_name == "primary_touch":
@@ -141,7 +142,6 @@ func handle_input(delta):
 		if xr_trackpad and xr_trackpad_touched:
 			var current_pos = xr_trackpad.get_vector2("primary")
 			var delta_pos = current_pos - xr_trackpad_origin
-			print("FHK - Delta pos: " + str(delta_pos))
 			if abs(delta_pos.x) >= TRACKPAD_DEADZONE:
 				x_value += 2 * delta_pos.x
 			if abs(delta_pos.y) >= TRACKPAD_DEADZONE:
